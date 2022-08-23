@@ -1,0 +1,89 @@
+import React from "react"
+
+export default function App() {
+    /**
+     * Challenge: Set up state to track our count (initial value is 0)
+     */
+    const [count, changeCount] = React.useState(0)
+    
+    function increment() {
+        changeCount(count + 1)
+    }
+    
+    function decrement() {
+        changeCount(count - 1)
+    }
+    
+    return (
+        <div className="counter">
+            <button className="counter--minus" onClick={decrement}>–</button>
+            <div className="counter--count">
+                <h1>{count}</h1>
+            </div>
+            <button className="counter--plus" onClick={increment}>+</button>
+        </div>
+    )
+}
+
+//better practice to do the count update in rthe above code is to use a callback function
+//see below:
+
+
+
+export default function App() {
+    const [count, setCount] = React.useState(0)
+
+//in the function that will update state, use a callback function. React will automatically
+//pass the old state value is the parameter into the callback function where you can then
+//use that parametere to do your change and then return the result back to the setState function
+//this is best practice rather than changing state directly.
+
+    function add() {
+        setCount(function(oldValue) {
+            return oldValue + 1
+        })
+    }
+    
+//Also see arrow function vewrsion of the same callback function code. 
+//comment note below is from the React tutorial I did.
+/**
+     * Note: if you ever need the old value of state
+     * to help you determine the new value of state,
+     * you should pass a callback function to your
+     * state setter function instead of using
+     * state directly. This callback function will
+     * receive the old value of state as its parameter,
+     * which you can then use to determine your new
+     * value of state.
+     */
+ function add() {
+    setCount(prevCount => prevCount + 1)
+}
+
+
+//final complete Counter code from tutorial is below
+
+import React from "react"
+
+export default function App() {
+    
+const [count, setCount] = React.useState(0)
+
+function subtract() {
+    setCount(prev => prev - 1)
+}
+
+function add() {
+    setCount(prev => prev + 1)
+}
+    
+    return (
+        <div className="counter">
+            <button className="counter--minus" onClick={subtract}>–</button>
+            <div className="counter--count">
+                <h1>{count}</h1>
+            </div>
+            <button className="counter--plus" onClick={add}>+</button>
+        </div>
+    )
+}
